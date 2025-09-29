@@ -114,7 +114,7 @@ creative_director.py
 
 ## 🔧 Asset Management
 
-This pipeline includes [replicate-predictions-downloader](https://github.com/closestfriend/replicate-predictions-downloader), a custom npm package I built to solve a critical gap: Replicate deletes predictions after 30 days, and there was no tool to batch download them.
+This pipeline includes [replicate-predictions-downloader](https://github.com/closestfriend/replicate-predictions-downloader), a custom npm package I built to solve a critical gap: Replicate deletes API-generated predictions after just 1 hour (web UI predictions last 30 days), and there was no tool to batch download them before they vanish.
 
 ```bash
 # Download recent campaign assets
@@ -128,10 +128,11 @@ npx replicate-predictions-downloader --last-run
 ```
 
 This tool is essential for:
-- Preserving generated assets before expiration
-- Batch downloading campaign materials
+- **Urgently preserving API-generated assets** (1-hour lifespan!)
+- Batch downloading campaign materials before they disappear
 - Organizing outputs by model and date
-- Creating backups of creative work
+- Creating permanent backups of creative work
+- Ensuring you don't lose expensive generations
 
 ## 📊 Output Structure
 
