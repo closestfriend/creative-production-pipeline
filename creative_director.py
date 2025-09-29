@@ -2,6 +2,7 @@
 """
 CREATIVE DIRECTOR - Professional AI Production Pipeline
 The synthesis of av-pair and fever-dream-pipeline
+Now with studio-inspired creative modes
 """
 
 import replicate
@@ -9,6 +10,7 @@ import os
 import json
 import time
 from pathlib import Path
+from mode_system import StudioModes, ReplicateOrchestrator, create_job_schema
 
 class CreativeDirector:
     """
@@ -19,6 +21,11 @@ class CreativeDirector:
     def __init__(self):
         self.output_dir = Path('./creative_outputs')
         self.output_dir.mkdir(exist_ok=True)
+
+        # Initialize studio modes
+        self.studio_modes = StudioModes()
+        self.current_mode = None
+        self.orchestrator = None
 
         # Enhanced model suite - Using Replicate's official recommendations
         self.models = {
@@ -106,15 +113,22 @@ class CreativeDirector:
             'premium': {'steps': 50, 'guidance': 15}
         }
 
-    def create_campaign(self, brief_type: str, quality: str = 'standard',
+    def create_campaign(self, brief_type: str = None, quality: str = 'standard',
                         include_video: bool = False, video_type: str = 'image2video',
                         image_model: str = None, enhance_prompts: bool = False,
-                        generate_landing: bool = False):
+                        generate_landing: bool = False, mode: str = None,
+                        product_name: str = None, product_desc: str = None):
         """
         Create a complete campaign with images, video, and audio.
-        Now with model selection and video generation.
+        Now supports both legacy briefs and new studio modes.
         """
 
+        # Use studio mode if specified
+        if mode and product_name:
+            return self._create_mode_campaign(mode, product_name, product_desc or "",
+                                               include_video, generate_landing)
+
+        # Legacy brief-based generation
         brief = self.briefs.get(brief_type, self.briefs['product_launch'])
         quality_settings = self.quality_levels.get(quality, self.quality_levels['standard'])
         image_model = image_model or self.default_image
@@ -309,6 +323,153 @@ class CreativeDirector:
 
         return results
 
+    def _create_mode_campaign(self, mode_name: str, product_name: str,
+                              product_desc: str, include_video: bool = True,
+                              generate_landing: bool = False):
+        """
+        Create campaign using studio mode system
+        """
+        # Get mode and create orchestrator
+        mode = self.studio_modes.get_mode(mode_name)
+        if not mode:
+            print(f"❌ Mode '{mode_name}' not found. Using legacy system.")
+            return self.create_campaign('product_launch')
+
+        self.current_mode = mode
+        self.orchestrator = ReplicateOrchestrator(mode)
+
+        print(f"\n{'='*60}")
+        print(f"🎬 STUDIO MODE: {mode.config.name}")
+        print(f"🏢 Inspired by: {mode.config.studio_inspiration}")
+        print(f"📦 Product: {product_name}")
+        print(f"📝 Description: {product_desc}")
+        print(f"{'='*60}")
+
+        # Create job schema
+        job_schema = create_job_schema(mode_name, product_name, product_desc)
+
+        results = {
+            'mode': mode_name,
+            'product': product_name,
+            'description': product_desc,
+            'studio_inspiration': mode.config.studio_inspiration,
+            'images': [],
+            'video': None,
+            'audio': None,
+            'timestamp': int(time.time())
+        }
+
+        # Execute jobs
+        print("\n📸 Generating hero visuals...")
+        for job_name, job_config in job_schema['jobs'].items():
+            if 'image' in job_name:
+                print(f"   {job_name}: ", end='', flush=True)
+                try:
+                    output = replicate.run(
+                        job_config['model'],
+                        input=job_config['input']
+                    )
+
+                    if output:
+                        url = output[0] if isinstance(output, list) else str(output)
+                        results['images'].append({
+                            'url': url,
+                            'type': job_name,
+                            'prompt': job_config['input'].get('prompt', '')
+                        })
+                        print("✅")
+                    else:
+                        print("❌")
+                except Exception as e:
+                    print(f"❌ ({str(e)[:30]}...)")
+
+        # Generate video if requested
+        if include_video and 'hero_video' in job_schema['jobs']:
+            print("\n🎥 Generating campaign video...")
+            try:
+                video_job = job_schema['jobs']['hero_video']
+
+                # If image-to-video and we have images, use the hero image
+                if 'svd' in video_job['model'] and results['images']:
+                    video_job['input']['input_image'] = results['images'][0]['url']
+
+                video_output = replicate.run(
+                    video_job['model'],
+                    input=video_job['input']
+                )
+
+                if video_output:
+                    results['video'] = str(video_output)
+                    print("   ✅ Video generated!")
+            except Exception as e:
+                print(f"   ❌ Video failed: {e}")
+
+        # Generate audio
+        if 'soundtrack' in job_schema['jobs']:
+            print("\n🎵 Generating campaign soundtrack...")
+            try:
+                audio_job = job_schema['jobs']['soundtrack']
+                audio_output = replicate.run(
+                    audio_job['model'],
+                    input=audio_job['input']
+                )
+
+                if audio_output:
+                    results['audio'] = str(audio_output)
+                    print("   ✅ Soundtrack generated!")
+            except Exception as e:
+                print(f"   ❌ Audio failed: {e}")
+
+        # Save campaign with mode metadata
+        self._save_mode_campaign(results, mode)
+
+        # Generate landing page if requested
+        if generate_landing:
+            from creative_enhancer import CreativeEnhancer
+            enhancer = CreativeEnhancer()
+            print("\n🌐 Generating landing page...")
+
+            campaign_dir = self.output_dir / f"{mode_name}_{product_name}_{results['timestamp']}"
+            metadata_path = campaign_dir / 'campaign_metadata.json'
+            with open(metadata_path, 'r') as f:
+                campaign_data = json.load(f)
+
+            html = enhancer.generate_landing_page(campaign_data)
+            landing_path = campaign_dir / 'index.html'
+            with open(landing_path, 'w') as f:
+                f.write(html)
+
+            print(f"   ✅ Landing page: {landing_path}")
+            results['landing_page'] = str(landing_path)
+
+        return results
+
+    def _save_mode_campaign(self, results, mode):
+        """Save mode-based campaign assets"""
+        campaign_dir = self.output_dir / f"{results['mode']}_{results['product']}_{results['timestamp']}"
+        campaign_dir.mkdir(exist_ok=True)
+
+        # Enhanced metadata with mode information
+        metadata = {
+            **results,
+            'mode_config': {
+                'name': mode.config.name,
+                'description': mode.config.description,
+                'studio_inspiration': mode.config.studio_inspiration,
+                'color_palette': mode.config.color_palette,
+                'preferred_models': mode.config.preferred_models
+            }
+        }
+
+        metadata_path = campaign_dir / 'campaign_metadata.json'
+        with open(metadata_path, 'w') as f:
+            json.dump(metadata, f, indent=2)
+
+        print(f"\n✨ MODE CAMPAIGN CREATED ✨")
+        print(f"📁 Location: {campaign_dir}")
+        print(f"🎨 Mode: {mode.config.name}")
+        print(f"💾 Metadata: {metadata_path}")
+
     def _save_campaign(self, results, brief):
         """Save campaign assets and metadata"""
 
@@ -368,6 +529,14 @@ class CreativeDirector:
         for level, settings in self.quality_levels.items():
             print(f"   • {level}: {settings['steps']} steps, {settings['guidance']} guidance")
 
+    def list_studio_modes(self):
+        """List available studio modes"""
+        print("\n🎨 Studio Modes (Professional):")
+        for mode_name in self.studio_modes.list_modes():
+            mode_info = self.studio_modes.get_mode_info(mode_name)
+            print(f"   • {mode_name}: {mode_info['description']}")
+            print(f"     Inspired by: {mode_info['studio_inspiration']}")
+
 
 def main():
     """Interactive creative director interface"""
@@ -375,41 +544,90 @@ def main():
     print("""
     🎨 CREATIVE PRODUCTION PIPELINE
     Professional AI Content Generation
+    Studio-Inspired Creative Modes
     """)
 
     director = CreativeDirector()
 
-    # Show available options
-    director.list_briefs()
-    print()
-    director.list_quality_levels()
+    # Ask user to choose system
+    print("\nSelect generation system:")
+    print("1. Legacy Brief System (simple)")
+    print("2. Studio Mode System (professional)")
 
-    # Get user input
-    print("\n" + "="*40)
+    system_choice = input("\nChoice (1-2): ").strip()
 
-    briefs = list(director.briefs.keys())
-    print("Select brief:")
-    for i, brief in enumerate(briefs, 1):
-        print(f"  {i}. {director.briefs[brief]['name']}")
+    if system_choice == "2":
+        # Studio mode system
+        director.list_studio_modes()
+        print("\n" + "="*40)
 
-    try:
-        choice = int(input("\nChoice (1-4): ")) - 1
-        brief_type = briefs[choice]
+        modes = list(director.studio_modes.list_modes())
+        print("\nSelect studio mode:")
+        for i, mode in enumerate(modes, 1):
+            print(f"  {i}. {mode}")
 
-        quality = input("Quality (draft/standard/premium): ").lower()
-        if quality not in director.quality_levels:
-            quality = 'standard'
+        try:
+            mode_choice = int(input("\nChoice (1-6): ")) - 1
+            mode_name = modes[mode_choice]
 
-        # Generate campaign
-        print(f"\n🚀 Generating {director.briefs[brief_type]['name']}...")
-        results = director.create_campaign(brief_type, quality)
+            product_name = input("\nProduct name (e.g., HaloOne): ").strip() or "ProductX"
+            product_desc = input("Product description: ").strip() or "Premium product"
+            include_video = input("Include video? (y/n): ").lower() == 'y'
+            generate_landing = input("Generate landing page? (y/n): ").lower() == 'y'
 
-        print("\n✅ Production complete!")
+            # Generate using studio mode
+            print(f"\n🚀 Generating {mode_name} campaign for {product_name}...")
+            results = director.create_campaign(
+                mode=mode_name,
+                product_name=product_name,
+                product_desc=product_desc,
+                include_video=include_video,
+                generate_landing=generate_landing
+            )
 
-    except (ValueError, IndexError) as e:
-        print(f"Invalid input: {e}")
-        print("Using defaults: product_launch / standard")
-        director.create_campaign('product_launch', 'standard')
+            print("\n✅ Studio production complete!")
+
+        except (ValueError, IndexError) as e:
+            print(f"Invalid input: {e}")
+            print("Using default mode: parallax_nocturne")
+            director.create_campaign(
+                mode='parallax_nocturne',
+                product_name='HaloOne',
+                product_desc='Premium wireless headphones'
+            )
+
+    else:
+        # Legacy brief system
+        director.list_briefs()
+        print()
+        director.list_quality_levels()
+
+        # Get user input
+        print("\n" + "="*40)
+
+        briefs = list(director.briefs.keys())
+        print("Select brief:")
+        for i, brief in enumerate(briefs, 1):
+            print(f"  {i}. {director.briefs[brief]['name']}")
+
+        try:
+            choice = int(input("\nChoice (1-5): ")) - 1
+            brief_type = briefs[choice]
+
+            quality = input("Quality (draft/standard/premium): ").lower()
+            if quality not in director.quality_levels:
+                quality = 'standard'
+
+            # Generate campaign
+            print(f"\n🚀 Generating {director.briefs[brief_type]['name']}...")
+            results = director.create_campaign(brief_type, quality)
+
+            print("\n✅ Production complete!")
+
+        except (ValueError, IndexError) as e:
+            print(f"Invalid input: {e}")
+            print("Using defaults: product_launch / standard")
+            director.create_campaign('product_launch', 'standard')
 
 
 if __name__ == "__main__":
