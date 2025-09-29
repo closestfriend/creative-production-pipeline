@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Output directories
+creative_outputs/
+campaign_outputs/
+downloads/
+
+# API Keys and Environment
+.env
+*.env
+secrets.json
+credentials.json
+config.json
+
+# System
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Test outputs
+test_*.png
+test_*.wav
+test_*.mp4
+draft_*/
+
+# Temp files
+*.tmp
+temp/
+tmp/
