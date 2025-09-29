@@ -1,0 +1,234 @@
+{
+  "exported_at": "2025-09-29T10:38:36.573Z",
+  "total_predictions": 4,
+  "model_stats": {
+    "riffusion": {
+      "total": 1,
+      "successful": 0,
+      "failed": 0,
+      "canceled": 0,
+      "succeeded": null
+    },
+    "flux-schnell": {
+      "total": 3,
+      "successful": 0,
+      "failed": 0,
+      "canceled": 0,
+      "succeeded": null
+    }
+  },
+  "predictions_by_model": {
+    "riffusion": [
+      {
+        "id": "5dv689b179rgc0csjm5tn1cs2g",
+        "created_at": "2025-09-29T10:36:15.034000Z",
+        "status": "succeeded",
+        "input": {
+          "prompt_a": "trap-influenced church organ, Southern gothic hymnal, prosperity gospel choir over 808s, trailer-park baroque symphony",
+          "denoising": 0.75,
+          "seed_image_id": "vibes"
+        },
+        "prompt_summary": "trap-influenced-church-organ-southern-gothic-hymna",
+        "has_output": true,
+        "urls": {
+          "get": "https://api.replicate.com/v1/predictions/5dv689b179rgc0csjm5tn1cs2g",
+          "cancel": "https://api.replicate.com/v1/predictions/5dv689b179rgc0csjm5tn1cs2g/cancel",
+          "web": "https://replicate.com/p/5dv689b179rgc0csjm5tn1cs2g"
+        }
+      }
+    ],
+    "flux-schnell": [
+      {
+        "id": "gypkahtxknrme0csjm5s4kn10g",
+        "created_at": "2025-09-29T10:36:14.109000Z",
+        "status": "succeeded",
+        "input": {
+          "prompt": "Ranchero chandelier above lean-filled crystal stemware, crushed-velvet church pews, Confederate flag repurposed as couture cape, chrome ATV graveyard, oil-slick rainbow, bullion-tone filters, professional quality, high detail",
+          "num_outputs": 1,
+          "aspect_ratio": "1:1",
+          "output_format": "png",
+          "output_quality": 95
+        },
+        "prompt_summary": "ranchero-chandelier-above-lean-filled-crystal-stem",
+        "has_output": true,
+        "urls": {
+          "stream": "https://stream.replicate.com/v1/files/bcwr-bdumpdfsorgmrtukwj57uxzyenzodbci3feklbd6unmiynhxbeua",
+          "get": "https://api.replicate.com/v1/predictions/gypkahtxknrme0csjm5s4kn10g",
+          "cancel": "https://api.replicate.com/v1/predictions/gypkahtxknrme0csjm5s4kn10g/cancel",
+          "web": "https://replicate.com/p/gypkahtxknrme0csjm5s4kn10g"
+        }
+      },
+      {
+        "id": "9755kqtsrsrma0csjm5rcdz1rg",
+        "created_at": "2025-09-29T10:36:13.126000Z",
+        "status": "succeeded",
+        "input": {
+          "prompt": "Catholic-ballerina iconography over trap-house neon, satin ballet slippers muddied in rural Michigan clay, abandoned K-mart crucifixes, Wal-Mart votive candles, gothic Americana meets Southern prosperity, professional quality, high detail",
+          "num_outputs": 1,
+          "aspect_ratio": "1:1",
+          "output_format": "png",
+          "output_quality": 95
+        },
+        "prompt_summary": "catholic-ballerina-iconography-over-trap-house-neo",
+        "has_output": true,
+        "urls": {
+          "stream": "https://stream.replicate.com/v1/files/bcwr-2k2rihlwnazrqvo3hucbzsq7yyw4u33n6l55lpr5q7yoqlr3qwuq",
+          "get": "https://api.replicate.com/v1/predictions/9755kqtsrsrma0csjm5rcdz1rg",
+          "cancel": "https://api.replicate.com/v1/predictions/9755kqtsrsrma0csjm5rcdz1rg/cancel",
+          "web": "https://replicate.com/p/9755kqtsrsrma0csjm5rcdz1rg"
+        }
+      },
+      {
+        "id": "3bntpz2p3nrma0csjm5tfayg2m",
+        "created_at": "2025-09-29T10:36:12.189000Z",
+        "status": "succeeded",
+        "input": {
+          "prompt": "couture-grunge texture, trailer-park baroque interior, gold grills beside crystal rosaries, velvet-curtained F-150 truck, resource-heavy chrome flipped to ruin porn, decision-grade creative vision, professional quality, high detail",
+          "num_outputs": 1,
+          "aspect_ratio": "1:1",
+          "output_format": "png",
+          "output_quality": 95
+        },
+        "prompt_summary": "couture-grunge-texture-trailer-park-baroque-interi",
+        "has_output": true,
+        "urls": {
+          "stream": "https://stream.replicate.com/v1/files/bcwr-qribszolniayjsu24t3h5pzupad4vwkewrlmp367uy3vblpnqtka",
+          "get": "https://api.replicate.com/v1/predictions/3bntpz2p3nrma0csjm5tfayg2m",
+          "cancel": "https://api.replicate.com/v1/predictions/3bntpz2p3nrma0csjm5tfayg2m/cancel",
+          "web": "https://replicate.com/p/3bntpz2p3nrma0csjm5tfayg2m"
+        }
+      }
+    ]
+  },
+  "raw_predictions": [
+    {
+      "completed_at": "2025-09-29T10:36:40.580985Z",
+      "created_at": "2025-09-29T10:36:15.034000Z",
+      "data_removed": false,
+      "error": null,
+      "id": "5dv689b179rgc0csjm5tn1cs2g",
+      "input": {
+        "prompt_a": "trap-influenced church organ, Southern gothic hymnal, prosperity gospel choir over 808s, trailer-park baroque symphony",
+        "denoising": 0.75,
+        "seed_image_id": "vibes"
+      },
+      "metrics": {
+        "predict_time": 9.163314439,
+        "total_time": 25.546985
+      },
+      "output": {
+        "audio": "https://replicate.delivery/czjl/pXCPIgDGR4Y3GdThL8P67S3r9U52c9bVoDR6SxdZmXAOTgWF/gen_sound.wav",
+        "spectrogram": "https://replicate.delivery/czjl/kWtFqXCs9VJUPpJ1WexomiaBkphtL1ifP2FR2TaeskuwZC0qA/spectrogram.jpg"
+      },
+      "started_at": "2025-09-29T10:36:31.417671Z",
+      "source": "api",
+      "status": "succeeded",
+      "urls": {
+        "get": "https://api.replicate.com/v1/predictions/5dv689b179rgc0csjm5tn1cs2g",
+        "cancel": "https://api.replicate.com/v1/predictions/5dv689b179rgc0csjm5tn1cs2g/cancel",
+        "web": "https://replicate.com/p/5dv689b179rgc0csjm5tn1cs2g"
+      },
+      "model": "riffusion/riffusion",
+      "version": "8cf61ea6c56afd61d8f5b9ffd14d7c216c0a93844ce2d82ac1c9ecc9c7f24e05"
+    },
+    {
+      "completed_at": "2025-09-29T10:36:14.844846Z",
+      "created_at": "2025-09-29T10:36:14.109000Z",
+      "data_removed": false,
+      "error": null,
+      "id": "gypkahtxknrme0csjm5s4kn10g",
+      "input": {
+        "prompt": "Ranchero chandelier above lean-filled crystal stemware, crushed-velvet church pews, Confederate flag repurposed as couture cape, chrome ATV graveyard, oil-slick rainbow, bullion-tone filters, professional quality, high detail",
+        "num_outputs": 1,
+        "aspect_ratio": "1:1",
+        "output_format": "png",
+        "output_quality": 95
+      },
+      "metrics": {
+        "image_count": 1,
+        "predict_time": 0.718361079,
+        "total_time": 0.735846
+      },
+      "output": [
+        "https://replicate.delivery/xezq/LQfNizVTLS3YQKh4uADaEZ5JpDrzEfqeX7LeW85TTXp4xEoVB/out-0.png"
+      ],
+      "started_at": "2025-09-29T10:36:14.126485Z",
+      "source": "api",
+      "status": "succeeded",
+      "urls": {
+        "stream": "https://stream.replicate.com/v1/files/bcwr-bdumpdfsorgmrtukwj57uxzyenzodbci3feklbd6unmiynhxbeua",
+        "get": "https://api.replicate.com/v1/predictions/gypkahtxknrme0csjm5s4kn10g",
+        "cancel": "https://api.replicate.com/v1/predictions/gypkahtxknrme0csjm5s4kn10g/cancel",
+        "web": "https://replicate.com/p/gypkahtxknrme0csjm5s4kn10g"
+      },
+      "model": "black-forest-labs/flux-schnell",
+      "version": "hidden"
+    },
+    {
+      "completed_at": "2025-09-29T10:36:13.897471Z",
+      "created_at": "2025-09-29T10:36:13.126000Z",
+      "data_removed": false,
+      "error": null,
+      "id": "9755kqtsrsrma0csjm5rcdz1rg",
+      "input": {
+        "prompt": "Catholic-ballerina iconography over trap-house neon, satin ballet slippers muddied in rural Michigan clay, abandoned K-mart crucifixes, Wal-Mart votive candles, gothic Americana meets Southern prosperity, professional quality, high detail",
+        "num_outputs": 1,
+        "aspect_ratio": "1:1",
+        "output_format": "png",
+        "output_quality": 95
+      },
+      "metrics": {
+        "image_count": 1,
+        "predict_time": 0.764126537,
+        "total_time": 0.771471
+      },
+      "output": [
+        "https://replicate.delivery/xezq/XoJKfse6AdploEHMQE5rJCdaeRxsCPOjvJZvxGOFLIM6YC0qA/out-0.png"
+      ],
+      "started_at": "2025-09-29T10:36:13.133345Z",
+      "source": "api",
+      "status": "succeeded",
+      "urls": {
+        "stream": "https://stream.replicate.com/v1/files/bcwr-2k2rihlwnazrqvo3hucbzsq7yyw4u33n6l55lpr5q7yoqlr3qwuq",
+        "get": "https://api.replicate.com/v1/predictions/9755kqtsrsrma0csjm5rcdz1rg",
+        "cancel": "https://api.replicate.com/v1/predictions/9755kqtsrsrma0csjm5rcdz1rg/cancel",
+        "web": "https://replicate.com/p/9755kqtsrsrma0csjm5rcdz1rg"
+      },
+      "model": "black-forest-labs/flux-schnell",
+      "version": "hidden"
+    },
+    {
+      "completed_at": "2025-09-29T10:36:12.920517Z",
+      "created_at": "2025-09-29T10:36:12.189000Z",
+      "data_removed": false,
+      "error": null,
+      "id": "3bntpz2p3nrma0csjm5tfayg2m",
+      "input": {
+        "prompt": "couture-grunge texture, trailer-park baroque interior, gold grills beside crystal rosaries, velvet-curtained F-150 truck, resource-heavy chrome flipped to ruin porn, decision-grade creative vision, professional quality, high detail",
+        "num_outputs": 1,
+        "aspect_ratio": "1:1",
+        "output_format": "png",
+        "output_quality": 95
+      },
+      "metrics": {
+        "image_count": 1,
+        "predict_time": 0.723433932,
+        "total_time": 0.731517
+      },
+      "output": [
+        "https://replicate.delivery/xezq/ifHNs28v5vzGe0lOp8drTXGeiX1vP90kSfsTbE0fPVnijJQrC/out-0.png"
+      ],
+      "started_at": "2025-09-29T10:36:12.197083Z",
+      "source": "api",
+      "status": "succeeded",
+      "urls": {
+        "stream": "https://stream.replicate.com/v1/files/bcwr-qribszolniayjsu24t3h5pzupad4vwkewrlmp367uy3vblpnqtka",
+        "get": "https://api.replicate.com/v1/predictions/3bntpz2p3nrma0csjm5tfayg2m",
+        "cancel": "https://api.replicate.com/v1/predictions/3bntpz2p3nrma0csjm5tfayg2m/cancel",
+        "web": "https://replicate.com/p/3bntpz2p3nrma0csjm5tfayg2m"
+      },
+      "model": "black-forest-labs/flux-schnell",
+      "version": "hidden"
+    }
+  ]
+}

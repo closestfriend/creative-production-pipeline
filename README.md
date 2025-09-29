@@ -10,6 +10,19 @@ This is the final form of a journey that began with simple audio-video synchroni
 2. **[fever-dream-pipeline](https://github.com/closestfriend/fever-dream-pipeline)** - The antithesis: Cursed content chaos
 3. **This repo** - The synthesis: Professional creative production
 
+## ⚡ Quick Start (30 seconds)
+
+```bash
+# The fastest way to get started
+python quickstart.py
+```
+
+This will:
+1. Check your Python version
+2. Install requirements
+3. Verify your API token
+4. Run a demo generation
+
 ## 🚀 What This Does
 
 Transforms creative briefs into multi-modal marketing assets using AI:
@@ -89,6 +102,25 @@ print(f"Audio: {results['audio']}")
 - Concept explanations
 - Focus-enhancing audio
 
+## 🎯 Model Selection (Replicate's Official Picks)
+
+### Image Generation
+| Model | Specialty | Speed | Use Case |
+|-------|-----------|-------|----------|
+| **bytedance/seedream-3** | Best Overall | Medium | Hero assets, maximum quality |
+| **black-forest-labs/flux-schnell** | Best Speed | ⚡ <1s | Rapid iteration, drafts |
+| **ideogram-ai/ideogram-v3-turbo** | Best Text | Fast | Logos, text overlays |
+| **recraft-ai/recraft-v3-svg** | Best SVG | Fast | Icons, logos, vectors |
+
+### Video Generation
+| Model | Type | Duration | Quality |
+|-------|------|----------|---------|
+| **CogVideoX-5B** | Text-to-video | 6s | State-of-the-art |
+| **Stable Video Diffusion** | Image-to-video | 2-4s | Production ready |
+| **Zeroscope v2** | Text-to-video | 3-10s | Longer clips |
+
+*Source: [Replicate's official recommendations](https://replicate.com/collections)*
+
 ## ⚡ Quality Levels
 
 - **Draft**: Fast generation (20 steps) - For quick concepts
@@ -166,14 +198,43 @@ This represents the synthesis of two opposing forces:
 
 The result: A professional tool that harnesses AI creativity for legitimate business use.
 
+## 🖼️ Example Outputs
+
+### Salem Aesthetic (FLUX Schnell)
+Complex artistic brief: "trailer-park baroque, opulence-adjacent decay"
+- Velvet-curtained F-150 in ornate interior
+- Muddy ballet slippers with neon cross
+- Ranchero chandelier in desert church
+
+### Product Launch (SDXL)
+Professional commercial photography:
+- Minimalist hero shots
+- Lifestyle product usage
+- Detail close-ups
+
+*Full gallery in `/examples`*
+
+## 🔄 API Modularity
+
+The pipeline is designed to be API-agnostic. While currently using Replicate, it can be adapted for:
+- **Google Gemini** - Imagen API for images
+- **OpenAI** - DALL-E 3 for images
+- **Midjourney** - Via unofficial APIs
+- **Stability AI** - Direct API access
+- **RunwayML** - Video generation
+- **ElevenLabs** - Audio generation
+
+Simply swap the API calls in `creative_director.py` while keeping the same interface.
+
 ## 🚦 Roadmap
 
 - [ ] Batch campaign generation
 - [ ] A/B testing variants
 - [ ] Brand guideline integration
-- [ ] Video generation support
+- [x] Video generation support (multiple models)
 - [ ] Campaign performance tracking
 - [ ] Template marketplace
+- [ ] Multi-API backend support
 
 ## 📜 License
 

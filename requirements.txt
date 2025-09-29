@@ -1,0 +1,16 @@
+# Creative Production Pipeline Requirements
+# Python 3.8+
+
+# Core
+replicate>=0.25.0
+
+# Optional but recommended
+python-dotenv>=1.0.0  # For .env file support
+requests>=2.31.0      # For downloading assets
+Pillow>=10.0.0        # For image processing
+moviepy>=1.0.3        # For video editing (optional)
+
+# Development
+pytest>=7.4.0
+black>=23.0.0
+flake8>=6.0.0
